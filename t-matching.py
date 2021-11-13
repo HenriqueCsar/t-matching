@@ -1,9 +1,10 @@
 from PIL import ImageGrab
+import pyscreenshot
 import numpy as np
 import cv2
 
 ##IMPLEMENTAR LOGO, MAIS TARDE AQUI
-template = cv2.imread("henrique.jpg", cv2.IMREAD_GRAYSCALE)
+template = cv2.imread("shoppe.jpg", cv2.IMREAD_GRAYSCALE)
 w, h = template.shape[::-1]
 
 while(True):
@@ -13,7 +14,10 @@ while(True):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     res = cv2.matchTemplate(gray, template, cv2.TM_CCOEFF_NORMED)
     loc = np.where(res >= 0.7)
-
+    if(len(loc[1])>0):
+        print('existe')
+        img.save('img.png')
+        
     for pt in zip(*loc[::-1]):
         cv2.rectangle(frame, pt, (pt[0] + w, pt[1] + h), (0, 255, 0), 3)
 
